@@ -2,12 +2,11 @@
     "private": true,
     "scripts": {
         "dev": "vite",
-        "build": "vite build"
+        "build": "vite build && vite build --ssr"
     },
     "devDependencies": {
         "@headlessui/react": "^1.4.2",
         "@inertiajs/inertia": "^0.11.0",
-        "@inertiajs/inertia-react": "^0.8.1",
         "@inertiajs/progress": "^0.2.6",
         "@tailwindcss/forms": "^0.5.3",
         "@vitejs/plugin-react": "^3.0.0",
@@ -22,6 +21,7 @@
         "vite": "^4.0.0"
     },
     "dependencies": {
+        "@inertiajs/react": "^1.0.6",
         "@types/jest": "^29.2.5",
         "@types/node": "^18.11.18",
         "@types/react": "^18.0.26",

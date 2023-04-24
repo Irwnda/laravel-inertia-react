@@ -1,26 +1,27 @@
 import "./bootstrap";
 import "../css/app.css";
 
-import { createRoot } from "react-dom/client";
-import { createInertiaApp } from "@inertiajs/inertia-react";
+import { hydrateRoot } from "react-dom/client";
+import { createInertiaApp } from "@inertiajs/react";
 import { InertiaProgress } from "@inertiajs/progress";
-import { resolvePageComponent } from "laravel-vite-plugin/inertia-helpers";
 import React from "react";
 
 const appName =
     window.document.getElementsByTagName("title")[0]?.innerText || "Laravel";
 
 createInertiaApp({
-    title: (title) => `${title} - ${appName}`,
-    resolve: (name) => import(`./Pages/${name}.tsx`),
-    // resolvePageComponent(
-    //     `./Pages/${name}.tsx`,
-    //     import.meta.glob("./Pages/**/*.tsx")
-    // ),
-    setup({ el, App, props }) {
-        const root = createRoot(el);
+    title: (title: string) => `${title} - ${appName}`,
+    resolve: (name: string) => {
+        const lastIndex = name.lastIndexOf("/");
+        const dir = name.substring(0, lastIndex);
+        const file = name.substring(lastIndex + 1);
 
-        root.render(<App {...props} />);
+        return lastIndex === -1
+            ? import(`./Pages/${name}.tsx`)
+            : import(`./Pages/${dir}/${file}.tsx`);
+    },
+    setup({ el, App, props }) {
+        hydrateRoot(el, <App {...props} />);
     },
 });
 
